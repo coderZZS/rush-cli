@@ -3,11 +3,10 @@ const colors = require("colors");
 const pathExists = require("path-exists").sync;
 const inquirer = require("inquirer");
 const { Listr } = require("listr2");
-const fse = require('fs-extra')
+const fse = require("fs-extra");
 const Command = require("@rush-cli/command");
 const log = require("@rush-cli/log");
-const { request } = require('@rush-cli/request')
-
+const { request } = require("@rush-cli/request");
 
 const CHECK_TYPE = [
   {
@@ -52,7 +51,7 @@ class InitCommand extends Command {
   init() {
     this.projectName = this._argv[0] || "my-project";
     this.projectHome = process.cwd();
-    this.projectPath = null // 项目地址
+    this.projectPath = null; // 项目地址
   }
   async exec() {
     await this.prepare();
@@ -63,11 +62,11 @@ class InitCommand extends Command {
     try {
       let projectPath = path.resolve(this.projectHome, this.projectName);
       if (pathExists(projectPath)) {
-        const projectName = await this.checkCreateDir()
+        const projectName = await this.checkCreateDir();
         projectPath = path.resolve(this.projectHome, projectName);
       }
-      await fse.emptyDir(projectPath)
-      this.projectPath = projectPath
+      await fse.emptyDir(projectPath);
+      this.projectPath = projectPath;
     } catch (error) {
       log.error(error.message);
     }
@@ -93,9 +92,9 @@ class InitCommand extends Command {
       ])
     ).isCountinue;
     if (!isCountinue) {
-      log.success('结束进程')
-      process.exit(0)
-    };
+      log.success("结束进程");
+      process.exit(0);
+    }
     const checkType = (
       await inquirer.prompt([
         {
@@ -108,30 +107,30 @@ class InitCommand extends Command {
     ).checkType;
     const handle = CHECK_TYPE.find(({ value }) => value === checkType).handle;
     const projectname = await handle(this.projectName);
-    return projectname
+    return projectname;
   }
-  async selectInitType () {
-    const { initType } =(await inquirer.prompt([
+  async selectInitType() {
+    const { initType } = await inquirer.prompt([
       {
-        name: 'initType',
-        message: '请选择初始化类型',
-        type: 'list',
+        name: "initType",
+        message: "请选择初始化类型",
+        type: "list",
         choices: [
           {
-            name: '项目',
-            value: 'project'
+            name: "项目",
+            value: "project",
           },
           {
-            name: '组件',
-            value: 'component'
-          }
-        ]
-      }
-    ]))
+            name: "组件",
+            value: "component",
+          },
+        ],
+      },
+    ]);
   }
-  async getTemplate(type = 'project') {
-    const res = await request.get('/npm')
-    return res.filter((project) => project.type === type)
+  async getTemplate(type = "project") {
+    const res = await request.get("/npm");
+    return res.filter((project) => project.type === type);
   }
 }
 module.exports = function init(argv) {
