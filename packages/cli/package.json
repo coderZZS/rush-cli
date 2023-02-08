@@ -1,0 +1,29 @@
+{
+  "name": "@rush-cli/cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "bin": {
+    "rush-cli": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rush-cli/log": "link:C:/Users/Admin/Desktop/rush-cli-project/rush-cli/packages/util/log",
+    "@rush-cli/util": "workspace:^1.0.0",
+    "colors": "^1.4.0",
+    "commander": "^10.0.0",
+    "dotenv": "^16.0.3",
+    "fs-extra": "^11.1.0",
+    "import-local": "^3.1.0",
+    "inquirer": "^8.0.0",
+    "listr2": "^5.0.7",
+    "path-exists": "^4.0.0",
+    "root-check": "^1.0.0",
+    "user-home": "^3.0.0"
+  }
+}
