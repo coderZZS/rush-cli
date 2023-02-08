@@ -1,0 +1,26 @@
+{
+  "name": "@rush-cli/init",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rush-cli/command": "workspace:^1.0.0",
+    "@rush-cli/init": "workspace:^1.0.0",
+    "@rush-cli/log": "workspace:^1.0.0",
+    "@rush-cli/request": "workspace:^1.0.0",
+    "colors": "^1.4.0",
+    "fs-extra": "^11.1.0",
+    "inquirer": "^8.0.0",
+    "listr2": "^5.0.7",
+    "path-exists": "4.0.0"
+  }
+}
