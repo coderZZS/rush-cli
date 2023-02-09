@@ -9,12 +9,14 @@ const fse = require("fs-extra");
 const { Command } = require("commander");
 const pkg = require("../package.json");
 const { Listr } = require("listr2");
-const { loading } = require('@rush-cli/util')
+const { loading } = require("@rush-cli/util");
 
 const DEFAULT_CLI_HOME = `.${checkScriptName()}`;
 const DEFAULT_REQUEST_URL = "http://127.0.0.1:7001";
 const DEFAULT_REQUEST_DIR = ".cli-request";
 const DEFAULT_REQUEST_FILE = "._request";
+const DEFAULT_TEMPLATE_DIR = ".template";
+const DEFAULT_TEMPLATE_CATCH_DIR = "node_modules";
 const command = new Command();
 
 async function exec() {
@@ -26,7 +28,7 @@ async function exec() {
 
 // 指令环境检查
 async function prepare() {
-  const runner = loading('prepare')
+  const runner = loading("prepare");
   try {
     await checkUserhome(); // 检查用户主目录
     await checkRoot(); // root降级
@@ -34,12 +36,11 @@ async function prepare() {
     await createDefaultCliHome(); // 初始化脚手架缓存文件
     await setRequestUrl(); // 初始化脚手架请求文件
     await checkVersion(); // 检查脚手架版本
-    runner.succeed()
+    runner.succeed();
   } catch (error) {
-    runner.warn(error.message)
+    runner.warn(error.message);
   }
-  
-  
+
   await wellcome(); // 欢迎界面
 
   // TODO 检查脚手架版本
@@ -72,14 +73,23 @@ async function checkEnv() {
 
 // 创建默认缓存目录
 async function createDefaultCliHome() {
-  const cliHome = path.resolve(userhome, DEFAULT_CLI_HOME);
+  const cliHome = path.resolve(userhome, DEFAULT_CLI_HOME); // 脚手架主目录
+  const cliHomeTemplate = path.resolve(cliHome, DEFAULT_TEMPLATE_DIR); // 脚手架模板目录
+  const cliHomeTemplateCatch = path.resolve(cliHomeTemplate, DEFAULT_TEMPLATE_CATCH_DIR); //脚手架模板缓存目录
+  const cliRequestFile = path.resolve(
+    cliHome,
+    DEFAULT_REQUEST_DIR,
+    DEFAULT_REQUEST_FILE
+  ); // 脚手架请求地址缓存目录
+
   await fse.ensureDir(cliHome);
-  process.env.CLI_HOME = cliHome;
-  // 创建请求缓存文件
-  const cliRequestHome = path.resolve(cliHome, DEFAULT_REQUEST_DIR);
-  await fse.ensureDir(cliRequestHome);
-  const cliRequestFile = path.resolve(cliRequestHome, DEFAULT_REQUEST_FILE);
+  await fse.ensureDir(cliHomeTemplate);
+  await fse.ensureDir(cliHomeTemplateCatch);
   await fse.ensureFile(cliRequestFile);
+
+  process.env.CLI_HOME = cliHome;
+  process.env.CLI_HOME_TEMPLATE = cliHomeTemplate;
+  process.env.CLI_HOME_TEMPLATE_CATCH = cliHomeTemplateCatch;
   process.env.CLI_REQUEST_FILE = cliRequestFile;
 }
 

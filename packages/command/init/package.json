@@ -16,6 +16,7 @@
     "@rush-cli/command": "workspace:^1.0.0",
     "@rush-cli/init": "workspace:^1.0.0",
     "@rush-cli/log": "workspace:^1.0.0",
+    "@rush-cli/package": "workspace:^1.0.0",
     "@rush-cli/request": "workspace:^1.0.0",
     "colors": "^1.4.0",
     "fs-extra": "^11.1.0",
