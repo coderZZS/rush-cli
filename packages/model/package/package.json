@@ -3,11 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@rush-cli/util": "workspace:^1.0.0",
+    "axios": "^1.3.2",
+    "ejs": "^3.1.8",
+    "fs-extra": "^11.1.0",
+    "glob": "^8.1.0",
+    "npminstall": "^7.4.2",
+    "url-join": "^4.0.1"
+  }
 }
